@@ -1,16 +1,19 @@
-# Vencord Installer
+# Sencord Installer
 
-The Vencord Installer allows you to install [Vencord, the cutest Discord Desktop client mod](https://github.com/Vendicated/Vencord)
+The Sencord Installer allows you to install the Vencord fork [Sencord, another cute Discord client mod](https://github.com/sinjs/sencord)
 
-![image](https://user-images.githubusercontent.com/45497981/226734476-5fb42420-844d-4e27-ae06-4799118e086e.png)
+![image](https://s3.nigga.church/images/SencordInstaller.png)
 
-## Usage
+## Download
 
-See https://vencord.dev/download
+- [Windows (GUI)](https://api.nigga.church/v1/releases/sencordinstaller/latest/download/windows-gui)
+- [Windows (CLI)](https://api.nigga.church/v1/releases/sencordinstaller/latest/download/windows-cli)
+- [macOS (GUI)](https://api.nigga.church/v1/releases/sencordinstaller/latest/download/macos-gui)
+- [Linux (CLI)](https://api.nigga.church/v1/releases/sencordinstaller/latest/download/linux-cli)
 
 ## Building from source
 
-### Prerequisites 
+### Prerequisites
 
 You need to install the [Go programming language](https://go.dev/doc/install) and GCC, the GNU Compiler Collection (MinGW on Windows)
 
@@ -18,18 +21,21 @@ You need to install the [Go programming language](https://go.dev/doc/install) an
 <summary>Additionally, if you're using Linux, you have to install some additional dependencies:</summary>
 
 #### Base dependencies
+
 ```sh
 apt install -y pkg-config libsdl2-dev libglx-dev libgl1-mesa-dev
 dnf install pkg-config libGL-devel libXxf86vm-devel
 ```
 
 #### X11 dependencies
+
 ```sh
 apt install -y xorg-dev
 dnf install libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel
 ```
 
 #### Wayland dependencies
+
 ```sh
 apt install -y libwayland-dev libxkbcommon-dev wayland-protocols extra-cmake-modules
 dnf install wayland-devel libxkbcommon-devel wayland-protocols-devel extra-cmake-modules
@@ -48,16 +54,19 @@ go mod tidy
 #### Build the GUI
 
 ##### Windows / Mac / Linux X11
+
 ```sh
 go build
 ```
 
 ##### Linux Wayland
+
 ```sh
 go build --tags wayland
 ```
 
 #### Build the CLI
+
 ```
 go build --tags cli
 ```
