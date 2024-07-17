@@ -74,7 +74,7 @@ func main() {
 		g.Update()
 	}()
 
-	win = g.NewMasterWindow("Sencord Installer", 1000, 600, 0)
+	win = g.NewMasterWindow("Sencord Installer", 1000, 620, 0)
 
 	icon, _, err := image.Decode(bytes.NewReader(iconBytes))
 	if err != nil {
