@@ -8,11 +8,12 @@ package main
 
 import (
 	"errors"
-	"github.com/ProtonMail/go-appdir"
 	"os"
 	"os/exec"
 	path "path/filepath"
 	"strings"
+
+	"github.com/ProtonMail/go-appdir"
 )
 
 var BaseDir string

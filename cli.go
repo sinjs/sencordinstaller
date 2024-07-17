@@ -12,12 +12,13 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/fatih/color"
-	"github.com/manifoldco/promptui"
 	"os"
 	"runtime"
 	"strings"
 	"vencordinstaller/buildinfo"
+
+	"github.com/fatih/color"
+	"github.com/manifoldco/promptui"
 )
 
 var discords []any
@@ -62,8 +63,8 @@ func main() {
 	}
 
 	if *versionFlag {
-		fmt.Println("Vencord Installer Cli", buildinfo.InstallerTag, "("+buildinfo.InstallerGitHash+")")
-		fmt.Println("Copyright (C) 2023 Vendicated and Vencord contributors")
+		fmt.Println("Sencord Installer Cli", buildinfo.InstallerTag, "("+buildinfo.InstallerGitHash+")")
+		fmt.Println("Copyright (C) 2023 Vendicated, Vencord and Sencord contributors")
 		fmt.Println("License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.")
 		return
 	}
@@ -102,18 +103,18 @@ func main() {
 			<-SelfUpdateCheckDoneChan
 			if IsSelfOutdated {
 				Log.Warn("Your installer is outdated.")
-				Log.Warn("To update, select the 'Update Vencord Installer' option to update, or run with --update-self")
+				Log.Warn("To update, select the 'Update Sencord Installer' option to update, or run with --update-self")
 			}
 		}()
 
 		choices := []string{
-			"Install Vencord",
-			"Repair Vencord",
-			"Uninstall Vencord",
+			"Install Sencord",
+			"Repair Sencord",
+			"Uninstall Sencord",
 			"Install OpenAsar",
 			"Uninstall OpenAsar",
 			"View Help Menu",
-			"Update Vencord Installer",
+			"Update Sencord Installer",
 			"Quit",
 		}
 		_, choice, err := (&promptui.Select{
@@ -128,7 +129,10 @@ func main() {
 			return
 		case "Quit":
 			return
-		case "Update Vencord Installer":
+		case "Update Sencord Installer":
+			Log.Error("Currently unsupported.")
+			exitFailure()
+			//TODO
 			if err := UpdateSelf(); err != nil {
 				Log.Error("Failed to update self:", err)
 				exitFailure()

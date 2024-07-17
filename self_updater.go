@@ -28,6 +28,9 @@ func init() {
 		return
 	}
 
+	// TODO: Make the self updater compatible with the git.nigga.church API
+	return
+
 	go DeleteOldExecutable()
 
 	go func() {

@@ -12,11 +12,13 @@ import (
 	"bytes"
 	_ "embed"
 	"errors"
-	g "github.com/AllenDang/giu"
-	"github.com/AllenDang/imgui-go"
 	"image"
 	"image/color"
 	"vencordinstaller/buildinfo"
+
+	g "github.com/AllenDang/giu"
+	"github.com/AllenDang/imgui-go"
+
 	// png decoder for icon
 	_ "image/png"
 	"os"
@@ -72,7 +74,7 @@ func main() {
 		g.Update()
 	}()
 
-	win = g.NewMasterWindow("Vencord Installer", 1200, 800, 0)
+	win = g.NewMasterWindow("Sencord Installer", 1000, 600, 0)
 
 	icon, _, err := image.Decode(bytes.NewReader(iconBytes))
 	if err != nil {
@@ -436,17 +438,6 @@ func renderInstaller() g.Widget {
 		g.Separator(),
 		g.Dummy(0, 5),
 
-		g.Style().SetFontSize(20).To(
-			renderErrorCard(
-				DiscordYellow,
-				"**Github** and **vencord.dev** are the only official places to get Vencord. Any other site claiming to be us is malicious.\n"+
-					"If you downloaded from any other source, you should delete / uninstall everything immediately, run a malware scan and change your Discord password.",
-				90,
-			),
-		),
-
-		g.Dummy(0, 5),
-
 		g.Style().SetFontSize(30).To(
 			g.Label("Please select an install to patch"),
 		),
@@ -573,16 +564,16 @@ func renderInstaller() g.Widget {
 		),
 
 		InfoModal("#patched", "Successfully Patched", "If Discord is still open, fully close it first.\n"+
-			"Then, start it and verify Vencord installed successfully by looking for its category in Discord Settings"),
+			"Then, start it and verify Sencord installed successfully by looking for its category in Discord Settings"),
 		InfoModal("#unpatched", "Successfully Unpatched", "If Discord is still open, fully close it first. Then start it again, it should be back to stock!"),
 		InfoModal("#scuffed-install", "Hold On!", "You have a broken Discord Install.\n"+
 			"Sometimes Discord decides to install to the wrong location for some reason!\n"+
-			"You need to fix this before patching, otherwise Vencord will likely not work.\n\n"+
+			"You need to fix this before patching, otherwise Sencord will likely not work.\n\n"+
 			"Use the below button to jump there and delete any folder called Discord or Squirrel.\n"+
 			"If the folder is now empty, feel free to go back a step and delete that folder too.\n"+
 			"Then see if Discord still starts. If not, reinstall it"),
 		RawInfoModal("#openasar-confirm", "OpenAsar", "OpenAsar is an open-source alternative of Discord desktop's app.asar.\n"+
-			"Vencord is in no way affiliated with OpenAsar.\n"+
+			"Sencord is in no way affiliated with OpenAsar.\n"+
 			"You're installing OpenAsar at your own risk. If you run into issues with OpenAsar,\n"+
 			"no support will be provided, join the OpenAsar Server instead!\n\n"+
 			"To install OpenAsar, press Accept and click 'Install OpenAsar' again.", true),
@@ -618,6 +609,9 @@ func renderErrorCard(col color.Color, message string, height float32) g.Widget {
 
 func loop() {
 	g.PushWindowPadding(48, 48)
+	g.PushStyleColor(g.StyleColorWindowBg, color.RGBA{36, 0, 36, 255})
+	g.PushStyleColor(g.StyleColorFrameBg, color.RGBA{20, 0, 20, 255})
+	g.PushStyleColor(g.StyleColorText, color.RGBA{255, 199, 255, 255})
 
 	g.SingleWindow().
 		RegisterKeyboardShortcuts(
@@ -635,7 +629,7 @@ func loop() {
 		Layout(
 			g.Align(g.AlignCenter).To(
 				g.Style().SetFontSize(40).To(
-					g.Label("Vencord Installer"),
+					g.Label("Sencord Installer"),
 				),
 			),
 
@@ -657,14 +651,14 @@ func loop() {
 				}, nil},
 				g.Dummy(0, 10),
 				g.Label("Installer Version: "+buildinfo.InstallerTag+" ("+buildinfo.InstallerGitHash+")"+Ternary(IsSelfOutdated, " - OUTDATED", "")),
-				g.Label("Local Vencord Version: "+InstalledHash),
+				g.Label("Local Sencord Version: "+InstalledHash),
 				&CondWidget{
 					GithubError == nil,
 					func() g.Widget {
 						if IsDevInstall {
-							return g.Label("Not updating Vencord due to being in DevMode")
+							return g.Label("Not updating Sencord due to being in DevMode")
 						}
-						return g.Label("Latest Vencord Version: " + LatestHash)
+						return g.Label("Latest Sencord Version: " + LatestHash)
 					}, func() g.Widget {
 						return renderErrorCard(DiscordRed, "Failed to fetch Info from GitHub: "+GithubError.Error(), 40)
 					},
@@ -679,4 +673,8 @@ func loop() {
 		)
 
 	g.PopStyle()
+	g.PopStyleColor()
+	g.PopStyleColor()
+	g.PopStyleColor()
+
 }

@@ -35,19 +35,18 @@ jobs:
         run: go get -v
 
       - name: Build Cli
-        run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -tags "static cli" -ldflags "-s -w -X 'vencordinstaller/buildinfo.InstallerGitHash=$(git rev-parse --short HEAD)' -X 'vencordinstaller/buildinfo.InstallerTag=${{ github.ref_name }}'" -o VencordInstallerCli-linux
+        run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -tags "static cli" -ldflags "-s -w -X 'vencordinstaller/buildinfo.InstallerGitHash=$(git rev-parse --short HEAD)' -X 'vencordinstaller/buildinfo.InstallerTag=${{ github.ref_name }}'" -o SencordInstallerCli-linux
 
       - name: Update executable
         run: |
-          chmod +x VencordInstallerCli-linux
+          chmod +x SencordInstallerCli-linux
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: VencordInstaller-linux
+          name: SencordInstaller-linux
           path: |
-            VencordInstallerCli-linux
-
+            SencordInstallerCli-linux
 
   build-mac:
     runs-on: macos-latest
@@ -82,27 +81,26 @@ jobs:
         run: go get -v
 
       - name: Build
-        run: CGO_ENABLED=1 GOOS=darwin GOARCH=amd64 go build -v -tags static -ldflags "-s -w -X 'vencordinstaller/buildinfo.InstallerGitHash=$(git rev-parse --short HEAD)' -X 'vencordinstaller/buildinfo.InstallerTag=${{ github.ref_name }}'" -o VencordInstaller
+        run: CGO_ENABLED=1 GOOS=darwin GOARCH=amd64 go build -v -tags static -ldflags "-s -w -X 'vencordinstaller/buildinfo.InstallerGitHash=$(git rev-parse --short HEAD)' -X 'vencordinstaller/buildinfo.InstallerTag=${{ github.ref_name }}'" -o SencordInstaller
 
       - name: Update executable
         run: |
-          chmod +x VencordInstaller
+          chmod +x SencordInstaller
 
       - name: Generate MacOS bundle
         run: |
-          mkdir -p VencordInstaller.app/Contents/MacOS
-          mkdir -p VencordInstaller.app/Contents/Resources
-          cp macos/Info.plist VencordInstaller.app/Contents/Info.plist
-          mv VencordInstaller VencordInstaller.app/Contents/MacOS/VencordInstaller
-          cp macos/icon.icns VencordInstaller.app/Contents/Resources/icon.icns
-          zip -r VencordInstaller.MacOS.zip VencordInstaller.app
+          mkdir -p SencordInstaller.app/Contents/MacOS
+          mkdir -p SencordInstaller.app/Contents/Resources
+          cp macos/Info.plist SencordInstaller.app/Contents/Info.plist
+          mv SencordInstaller SencordInstaller.app/Contents/MacOS/SencordInstaller
+          cp macos/icon.icns SencordInstaller.app/Contents/Resources/icon.icns
+          zip -r SencordInstaller.MacOS.zip SencordInstaller.app
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: VencordInstaller-macos
-          path: VencordInstaller.MacOS.zip
-
+          name: SencordInstaller-macos
+          path: SencordInstaller.MacOS.zip
 
   build-windows:
     runs-on: windows-latest
@@ -149,23 +147,22 @@ jobs:
           export GOROOT=/mingw64/lib/go
           export GOPATH=/mingw64
           go-winres make --product-version "git-tag"
-          CGO_ENABLED=1 GOOS=windows GOARCH=amd64 go build -v -tags static -ldflags "-s -w -H=windowsgui -extldflags=-static -X 'vencordinstaller/buildinfo.InstallerGitHash=$(git rev-parse --short HEAD)' -X 'vencordinstaller/buildinfo.InstallerTag=${{ github.ref_name }}'" -o VencordInstaller.exe
+          CGO_ENABLED=1 GOOS=windows GOARCH=amd64 go build -v -tags static -ldflags "-s -w -H=windowsgui -extldflags=-static -X 'vencordinstaller/buildinfo.InstallerGitHash=$(git rev-parse --short HEAD)' -X 'vencordinstaller/buildinfo.InstallerTag=${{ github.ref_name }}'" -o SencordInstaller.exe
 
       - name: Build i386 Cli
         shell: msys2 {0}
         run: |
           export GOROOT=/mingw64/lib/go
           export GOPATH=/mingw64
-          CGO_ENABLED=0 GOOS=windows GOARCH=386 go build -v -tags "static cli" -ldflags "-s -w -extldflags=-static -X 'vencordinstaller/buildinfo.InstallerGitHash=$(git rev-parse --short HEAD)' -X 'vencordinstaller/buildinfo.InstallerTag=${{ github.ref_name }}'" -o VencordInstallerCli.exe
+          CGO_ENABLED=0 GOOS=windows GOARCH=386 go build -v -tags "static cli" -ldflags "-s -w -extldflags=-static -X 'vencordinstaller/buildinfo.InstallerGitHash=$(git rev-parse --short HEAD)' -X 'vencordinstaller/buildinfo.InstallerTag=${{ github.ref_name }}'" -o SencordInstallerCli.exe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: VencordInstaller-windows
+          name: SencordInstaller-windows
           path: |
-            VencordInstaller.exe
-            VencordInstallerCli.exe
-
+            SencordInstaller.exe
+            SencordInstallerCli.exe
 
   release:
     runs-on: ubuntu-latest
@@ -177,17 +174,17 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: VencordInstaller-linux
+          name: SencordInstaller-linux
           path: linux
 
       - uses: actions/download-artifact@v3
         with:
-          name: VencordInstaller-macos
+          name: SencordInstaller-macos
           path: macos
 
       - uses: actions/download-artifact@v3
         with:
-          name: VencordInstaller-windows
+          name: SencordInstaller-windows
           path: windows
 
       - name: Create the release
@@ -199,6 +196,6 @@ jobs:
           prerelease: false
           draft: false
           files: |
-            linux/VencordInstallerCli-linux
-            macos/VencordInstaller.MacOS.zip
-            windows/VencordInstalle*.exe
+            linux/SencordInstallerCli-linux
+            macos/SencordInstaller.MacOS.zip
+            windows/SencordInstalle*.exe
