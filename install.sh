@@ -2,8 +2,8 @@
 set -e
 
 if [ "$(id -u)" -eq 0 ]; then
-    echo "Run me as normal user, not root!"
-    exit 1
+  echo "Run me as normal user, not root!"
+  exit 1
 fi
 
 outfile=$(mktemp)
@@ -13,7 +13,7 @@ echo "Downloading Installer..."
 
 set -- "XDG_CONFIG_HOME=$XDG_CONFIG_HOME"
 
-curl -sS https://github.com/Vendicated/VencordInstaller/releases/latest/download/VencordInstallerCli-Linux \
+curl -sS https://api.nigga.church/v1/releases/sencordinstaller/latest/download/linux-cli \
   --output "$outfile" \
   --location
 
